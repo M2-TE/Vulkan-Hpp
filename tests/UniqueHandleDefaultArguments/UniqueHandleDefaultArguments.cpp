@@ -34,6 +34,6 @@ namespace vk {
 int main( int /*argc*/, char ** /*argv*/ )
 {
   VkSurfaceKHR surface       = 0;
-  auto         uniqueSurface = vk::UniqueSurfaceKHR( surface, vk::Instance() );
+  auto         uniqueSurface = vk::UniqueSurfaceKHR( static_cast<vk::SurfaceKHR>(surface), vk::Instance() );
   return 0;
 }
