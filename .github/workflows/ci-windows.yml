@@ -114,7 +114,6 @@ jobs:
               -D VULKAN_HPP_PRECOMPILE=OFF                    \
               -D CMAKE_CXX_STANDARD=$CXX_STANDARD
             cmake --build build --parallel --clean-first --config $BUILD_TYPE
-            cd build && ctest -j --output-on-failure -C $BUILD_TYPE
-            cd ..
+            ctest -j --output-on-failure --test-dir build -C $BUILD_TYPE
           done
         done
