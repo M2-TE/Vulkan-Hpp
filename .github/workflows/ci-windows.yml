@@ -113,7 +113,7 @@ jobs:
               -D VULKAN_HPP_BUILD_WITH_LOCAL_VULKAN_HPP=ON    \
               -D VULKAN_HPP_PRECOMPILE=OFF                    \
               -D CMAKE_CXX_STANDARD=$CXX_STANDARD
-            cmake --build build --parallel --clean-first --config $BUILD_TYPE
+            cmake --build build --clean-first --config $BUILD_TYPE
             ctest -j --output-on-failure --test-dir build -C $BUILD_TYPE
           done
         done
