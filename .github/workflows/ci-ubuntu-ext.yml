@@ -31,7 +31,7 @@ jobs:
         version: 1.11.0
     - name: Install Clang and CMake
       run: |
-        sudo apt purge -y --auto-remove clang
+        sudo apt purge -y --auto-remove clang* libc++*
         sudo apt-get update && sudo apt-get install lsb-release gpg software-properties-common wget
         wget https://apt.llvm.org/llvm.sh
         chmod +x llvm.sh
