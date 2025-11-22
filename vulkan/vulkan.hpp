@@ -57,7 +57,7 @@ extern "C" __declspec( dllimport ) FARPROC __stdcall GetProcAddress( HINSTANCE h
 #  endif
 #endif
 
-static_assert( VK_HEADER_VERSION == 332, "Wrong VK_HEADER_VERSION!" );
+static_assert( VK_HEADER_VERSION == 334, "Wrong VK_HEADER_VERSION!" );
 
 // <tuple> includes <sys/sysmacros.h> through some other header
 // this results in major(x) being resolved to gnu_dev_major(x)
@@ -6592,6 +6592,13 @@ namespace VULKAN_HPP_NAMESPACE
         return ::vkCmdEndRendering2EXT( commandBuffer, pRenderingEndInfo );
       }
 
+      //=== VK_EXT_custom_resolve ===
+
+      void vkCmdBeginCustomResolveEXT( VkCommandBuffer commandBuffer, const VkBeginCustomResolveInfoEXT * pBeginCustomResolveInfo ) const VULKAN_HPP_NOEXCEPT
+      {
+        return ::vkCmdBeginCustomResolveEXT( commandBuffer, pBeginCustomResolveInfo );
+      }
+
       //=== VK_KHR_maintenance10 ===
 
       void vkCmdEndRendering2KHR( VkCommandBuffer commandBuffer, const VkRenderingEndInfoKHR * pRenderingEndInfo ) const VULKAN_HPP_NOEXCEPT
@@ -9444,6 +9451,10 @@ namespace VULKAN_HPP_NAMESPACE
   VULKAN_HPP_CONSTEXPR_INLINE auto KHRShaderFmaExtensionName = VK_KHR_SHADER_FMA_EXTENSION_NAME;
   VULKAN_HPP_CONSTEXPR_INLINE auto KHRShaderFmaSpecVersion   = VK_KHR_SHADER_FMA_SPEC_VERSION;
 
+  //=== VK_EXT_ray_tracing_invocation_reorder ===
+  VULKAN_HPP_CONSTEXPR_INLINE auto EXTRayTracingInvocationReorderExtensionName = VK_EXT_RAY_TRACING_INVOCATION_REORDER_EXTENSION_NAME;
+  VULKAN_HPP_CONSTEXPR_INLINE auto EXTRayTracingInvocationReorderSpecVersion   = VK_EXT_RAY_TRACING_INVOCATION_REORDER_SPEC_VERSION;
+
   //=== VK_EXT_depth_clamp_control ===
   VULKAN_HPP_CONSTEXPR_INLINE auto EXTDepthClampControlExtensionName = VK_EXT_DEPTH_CLAMP_CONTROL_EXTENSION_NAME;
   VULKAN_HPP_CONSTEXPR_INLINE auto EXTDepthClampControlSpecVersion   = VK_EXT_DEPTH_CLAMP_CONTROL_SPEC_VERSION;
@@ -9531,6 +9542,10 @@ namespace VULKAN_HPP_NAMESPACE
   //=== VK_EXT_shader_64bit_indexing ===
   VULKAN_HPP_CONSTEXPR_INLINE auto EXTShader64BitIndexingExtensionName = VK_EXT_SHADER_64BIT_INDEXING_EXTENSION_NAME;
   VULKAN_HPP_CONSTEXPR_INLINE auto EXTShader64BitIndexingSpecVersion   = VK_EXT_SHADER_64BIT_INDEXING_SPEC_VERSION;
+
+  //=== VK_EXT_custom_resolve ===
+  VULKAN_HPP_CONSTEXPR_INLINE auto EXTCustomResolveExtensionName = VK_EXT_CUSTOM_RESOLVE_EXTENSION_NAME;
+  VULKAN_HPP_CONSTEXPR_INLINE auto EXTCustomResolveSpecVersion   = VK_EXT_CUSTOM_RESOLVE_SPEC_VERSION;
 
   //=== VK_QCOM_data_graph_model ===
   VULKAN_HPP_CONSTEXPR_INLINE auto QCOMDataGraphModelExtensionName = VK_QCOM_DATA_GRAPH_MODEL_EXTENSION_NAME;
@@ -19170,6 +19185,34 @@ namespace VULKAN_HPP_NAMESPACE
     };
   };
 
+  //=== VK_EXT_ray_tracing_invocation_reorder ===
+  template <>
+  struct StructExtends<PhysicalDeviceRayTracingInvocationReorderPropertiesEXT, PhysicalDeviceProperties2>
+  {
+    enum
+    {
+      value = true
+    };
+  };
+
+  template <>
+  struct StructExtends<PhysicalDeviceRayTracingInvocationReorderFeaturesEXT, PhysicalDeviceFeatures2>
+  {
+    enum
+    {
+      value = true
+    };
+  };
+
+  template <>
+  struct StructExtends<PhysicalDeviceRayTracingInvocationReorderFeaturesEXT, DeviceCreateInfo>
+  {
+    enum
+    {
+      value = true
+    };
+  };
+
   //=== VK_EXT_depth_clamp_control ===
   template <>
   struct StructExtends<PhysicalDeviceDepthClampControlFeaturesEXT, PhysicalDeviceFeatures2>
@@ -19701,6 +19744,52 @@ namespace VULKAN_HPP_NAMESPACE
 
   template <>
   struct StructExtends<PhysicalDeviceShader64BitIndexingFeaturesEXT, DeviceCreateInfo>
+  {
+    enum
+    {
+      value = true
+    };
+  };
+
+  //=== VK_EXT_custom_resolve ===
+  template <>
+  struct StructExtends<PhysicalDeviceCustomResolveFeaturesEXT, PhysicalDeviceFeatures2>
+  {
+    enum
+    {
+      value = true
+    };
+  };
+
+  template <>
+  struct StructExtends<PhysicalDeviceCustomResolveFeaturesEXT, DeviceCreateInfo>
+  {
+    enum
+    {
+      value = true
+    };
+  };
+
+  template <>
+  struct StructExtends<CustomResolveCreateInfoEXT, GraphicsPipelineCreateInfo>
+  {
+    enum
+    {
+      value = true
+    };
+  };
+
+  template <>
+  struct StructExtends<CustomResolveCreateInfoEXT, CommandBufferInheritanceInfo>
+  {
+    enum
+    {
+      value = true
+    };
+  };
+
+  template <>
+  struct StructExtends<CustomResolveCreateInfoEXT, ShaderCreateInfoEXT>
   {
     enum
     {
@@ -21236,6 +21325,9 @@ namespace VULKAN_HPP_NAMESPACE
 
       //=== VK_EXT_fragment_density_map_offset ===
       PFN_vkCmdEndRendering2EXT vkCmdEndRendering2EXT = 0;
+
+      //=== VK_EXT_custom_resolve ===
+      PFN_vkCmdBeginCustomResolveEXT vkCmdBeginCustomResolveEXT = 0;
 
       //=== VK_KHR_maintenance10 ===
       PFN_vkCmdEndRendering2KHR vkCmdEndRendering2KHR = 0;
@@ -22879,6 +22971,9 @@ namespace VULKAN_HPP_NAMESPACE
         if ( !vkCmdEndRendering2KHR )
           vkCmdEndRendering2KHR = vkCmdEndRendering2EXT;
 
+        //=== VK_EXT_custom_resolve ===
+        vkCmdBeginCustomResolveEXT = PFN_vkCmdBeginCustomResolveEXT( vkGetInstanceProcAddr( instance, "vkCmdBeginCustomResolveEXT" ) );
+
         //=== VK_KHR_maintenance10 ===
         vkCmdEndRendering2KHR = PFN_vkCmdEndRendering2KHR( vkGetInstanceProcAddr( instance, "vkCmdEndRendering2KHR" ) );
       }
@@ -24127,6 +24222,9 @@ namespace VULKAN_HPP_NAMESPACE
         vkCmdEndRendering2EXT = PFN_vkCmdEndRendering2EXT( vkGetDeviceProcAddr( device, "vkCmdEndRendering2EXT" ) );
         if ( !vkCmdEndRendering2KHR )
           vkCmdEndRendering2KHR = vkCmdEndRendering2EXT;
+
+        //=== VK_EXT_custom_resolve ===
+        vkCmdBeginCustomResolveEXT = PFN_vkCmdBeginCustomResolveEXT( vkGetDeviceProcAddr( device, "vkCmdBeginCustomResolveEXT" ) );
 
         //=== VK_KHR_maintenance10 ===
         vkCmdEndRendering2KHR = PFN_vkCmdEndRendering2KHR( vkGetDeviceProcAddr( device, "vkCmdEndRendering2KHR" ) );
