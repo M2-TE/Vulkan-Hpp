@@ -36,12 +36,6 @@ import vulkan;
 #  include <vulkan/vulkan.hpp>
 #endif
 
-namespace vk {
-  namespace detail {
-    DispatchLoaderDynamic defaultDispatchLoaderDynamic;
-  }
-}
-
 int main( int /*argc*/, char ** /*argv*/ )
 {
   //=== VK_VERSION_1_0 ===
