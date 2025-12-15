@@ -81,7 +81,10 @@ if( VULKAN_HPP_TESTS_CTEST AND VULKAN_HPP_BUILD_CXX_MODULE )
 	vulkan_hpp__setup_test( NAME NoDefaultDispatcher CXX_MODULE )
 	vulkan_hpp__setup_test( NAME NoExceptions CXX_MODULE )
 	vulkan_hpp__setup_test( NAME NoExceptionsRAII CXX_MODULE )
-	vulkan_hpp__setup_test( NAME StructureChain CXX_MODULE )
+	# MSVC cannot deduct types for structured binding
+	if( NOT MSVC )
+		vulkan_hpp__setup_test( NAME StructureChain CXX_MODULE )
+	endif()
 	# add_subdirectory( UniqueHandle ) # no CXX_MODULE test version yet
 	vulkan_hpp__setup_test( NAME UniqueHandleDefaultArguments CXX_MODULE )
 	vulkan_hpp__setup_test( NAME Video CXX_MODULE )
