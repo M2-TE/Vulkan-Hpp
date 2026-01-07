@@ -68,6 +68,7 @@ jobs:
 
     - name: Generate headers
       run: |
+        export LDFLAGS="-L/opt/homebrew/opt/llvm/lib/c++ -L/opt/homebrew/opt/llvm/lib/unwind -lunwind"
         cmake -B build -G Ninja                                    \
           -D VULKAN_HPP_GENERATOR_BUILD=ON                         \
           -D VULKAN_HPP_RUN_GENERATOR=OFF                          \
@@ -96,6 +97,7 @@ jobs:
 
     - name: Build samples and tests # TODO: C++11 to C++20
       run: |
+        export LDFLAGS="-L/opt/homebrew/opt/llvm/lib/c++ -L/opt/homebrew/opt/llvm/lib/unwind -lunwind"
         for CXX_STANDARD in 23; do
           for BUILD_TYPE in Debug Release; do
             echo "================================================================================="
