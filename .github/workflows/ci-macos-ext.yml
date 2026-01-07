@@ -37,7 +37,7 @@ jobs:
           -D CMAKE_BUILD_TYPE=Release                              \
           -D GLM_BUILD_LIBRARY=ON                                  \
           -D GLM_BUILD_INSTALL=ON                                  \
-          -D GLM_BUILD_TESTS=OFF                                   \
+          -D GLM_BUILD_TESTS=OFF
         cmake --build build --parallel
         sudo cmake --install build
 
