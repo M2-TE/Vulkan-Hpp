@@ -56,7 +56,7 @@ jobs:
         cmake -B build -G Ninja                                    \
           -D CMAKE_C_COMPILER=/opt/homebrew/opt/llvm/bin/clang     \
           -D CMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm/bin/clang++ \
-          -D CMAKE_CXX_FLAGS=-stdlib=/opt/homebrew/opt/llvm/lib/c++ \
+          -D CMAKE_CXX_FLAGS=-stdlib=libc++ \
           -D CMAKE_CXX_STANDARD=11                                 \
           -D CMAKE_BUILD_TYPE=Release                              \
           -D ENABLE_OPT=OFF                                        \
