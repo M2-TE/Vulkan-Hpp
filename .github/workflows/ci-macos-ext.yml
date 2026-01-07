@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         os: [macos-26]
-        compiler: [20, 21] # TODO: 18, 19
+        compiler: [21] # TODO: 18, 19, 20
 
     steps:
     - uses: actions/checkout@v4
@@ -22,6 +22,7 @@ jobs:
     - name: Install libraries
       run: |
         brew install clang-format molten-vk llvm@${{matrix.compiler}}
+        ls /opt/homebrew/opt/llvm/bin/
 
     - name: Install Ninja
       uses: ashutoshvarma/setup-ninja@master
@@ -93,7 +94,7 @@ jobs:
           -D CMAKE_BUILD_TYPE=Release
         cmake --build build --parallel --clean-first
 
-    - name: Build samples and tests
+    - name: Build samples and tests # TODO: C++11 to C++20
       run: |
         for CXX_STANDARD in 23; do
           for BUILD_TYPE in Debug Release; do
