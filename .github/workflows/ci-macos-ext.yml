@@ -22,6 +22,7 @@ jobs:
     - name: Install libraries
       run: |
         brew install clang-format molten-vk llvm@${{matrix.compiler}}
+        ls /opt/homebrew/opt/llvm/lib
 
     - name: Install Ninja
       uses: ashutoshvarma/setup-ninja@master
@@ -55,7 +56,7 @@ jobs:
         cmake -B build -G Ninja                                    \
           -D CMAKE_C_COMPILER=/opt/homebrew/opt/llvm/bin/clang     \
           -D CMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm/bin/clang++ \
-          -D CMAKE_CXX_FLAGS=-stdlib=/opt/homebrew/opt/llvm/lib/libc++ \
+          -D CMAKE_CXX_FLAGS=-stdlib=/opt/homebrew/opt/llvm/lib/c++ \
           -D CMAKE_CXX_STANDARD=11                                 \
           -D CMAKE_BUILD_TYPE=Release                              \
           -D ENABLE_OPT=OFF                                        \
