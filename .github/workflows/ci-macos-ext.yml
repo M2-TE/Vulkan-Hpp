@@ -30,6 +30,7 @@ jobs:
 
     - name: Install glm, glfw and glslang
       run: |
+        export LDFLAGS="-L/opt/homebrew/opt/llvm/lib/c++ -L/opt/homebrew/opt/llvm/lib/unwind -lunwind"
         cd glm
         cmake -B build -G Ninja                                \
           -D CMAKE_C_COMPILER=/opt/homebrew/opt/llvm/bin/clang \
@@ -53,7 +54,6 @@ jobs:
 
         cd ../glslang
         cmake -B build -G Ninja                                    \
-          -D CMAKE_EXE_LINKER_FLAGS="-L/opt/homebrew/opt/llvm/lib/c++ -L/opt/homebrew/opt/llvm/lib/unwind -lunwind" \
           -D CMAKE_C_COMPILER=/opt/homebrew/opt/llvm/bin/clang     \
           -D CMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm/bin/clang++ \
           -D CMAKE_CXX_FLAGS=-stdlib=libc++                        \
@@ -69,7 +69,6 @@ jobs:
     - name: Generate headers
       run: |
         cmake -B build -G Ninja                                    \
-          -D CMAKE_EXE_LINKER_FLAGS="-L/opt/homebrew/opt/llvm/lib/c++ -L/opt/homebrew/opt/llvm/lib/unwind -lunwind" \
           -D VULKAN_HPP_GENERATOR_BUILD=ON                         \
           -D VULKAN_HPP_RUN_GENERATOR=OFF                          \
           -D VULKAN_HPP_SAMPLES_BUILD=OFF                          \
@@ -90,7 +89,6 @@ jobs:
           -D VULKAN_HPP_DISPATCH_LOADER_DYNAMIC=ON                 \
           -D VULKAN_HPP_BUILD_WITH_LOCAL_VULKAN_HPP=ON             \
           -D VULKAN_HPP_PRECOMPILE=OFF                             \
-          -D CMAKE_EXE_LINKER_FLAGS="-L/opt/homebrew/opt/llvm/lib/c++ -L/opt/homebrew/opt/llvm/lib/unwind -lunwind" \
           -D CMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm/bin/clang++ \
           -D CMAKE_CXX_STANDARD=20                                 \
           -D CMAKE_BUILD_TYPE=Release
@@ -119,11 +117,11 @@ jobs:
               -D VULKAN_HPP_DISPATCH_LOADER_DYNAMIC=ON                                    \
               -D VULKAN_HPP_BUILD_WITH_LOCAL_VULKAN_HPP=ON                                \
               -D VULKAN_HPP_PRECOMPILE=OFF                                                \
-              -D CMAKE_EXE_LINKER_FLAGS="-L/opt/homebrew/opt/llvm/lib/c++ -L/opt/homebrew/opt/llvm/lib/unwind -lunwind" \
               -D CMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm/bin/clang-${{matrix.compiler}} \
               -D CMAKE_CXX_STANDARD=$CXX_STANDARD                                         \
               -D CMAKE_CXX_FLAGS=-stdlib=libc++                                           \
-              -D CMAKE_BUILD_TYPE=$BUILD_TYPE
+              -D CMAKE_BUILD_TYPE=$BUILD_TYPE                                             \
+              -D CMAKE_EXPERIMENTAL_CXX_IMPORT_STD=d0edc3af-4c50-42ea-a356-e2862fe7a444
             cmake --build build --parallel --clean-first
             ctest -j --output-on-failure --test-dir build
           done
