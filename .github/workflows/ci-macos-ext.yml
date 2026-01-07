@@ -22,7 +22,7 @@ jobs:
     - name: Install libraries
       run: |
         brew install clang-format molten-vk llvm@${{matrix.compiler}}
-        ls /opt/homebrew/opt/llvm/bin/
+        /opt/homebrew/opt/llvm/bin/clang++ --version
 
     - name: Install Ninja
       uses: ashutoshvarma/setup-ninja@master
@@ -32,35 +32,35 @@ jobs:
     - name: Install glm, glfw and glslang
       run: |
         cd glm
-        cmake -B build -G Ninja                                                         \
-          -D CMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm/bin/clang++-${{matrix.compiler}} \
-          -D CMAKE_CXX_STANDARD=11                                                      \
-          -D CMAKE_BUILD_TYPE=Release                                                   \
-          -D GLM_BUILD_LIBRARY=ON                                                       \
-          -D GLM_BUILD_INSTALL=ON                                                       \
+        cmake -B build -G Ninja                                                       \
+          -D CMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm/bin/clang-${{matrix.compiler}} \
+          -D CMAKE_CXX_STANDARD=11                                                    \
+          -D CMAKE_BUILD_TYPE=Release                                                 \
+          -D GLM_BUILD_LIBRARY=ON                                                     \
+          -D GLM_BUILD_INSTALL=ON                                                     \
           -D GLM_BUILD_TESTS=OFF
         cmake --build build --parallel
         sudo cmake --install build
 
         cd ../glfw
-        cmake -B build -G Ninja                                                         \
-          -D CMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm/bin/clang++-${{matrix.compiler}} \
-          -D CMAKE_CXX_STANDARD=11                                                      \
-          -D CMAKE_BUILD_TYPE=Release                                                   \
-          -D GLFW_BUILD_EXAMPLES=OFF                                                    \
-          -D GLFW_BUILD_TESTS=OFF                                                       \
-          -D GLFW_BUILD_DOCS=OFF                                                        \
+        cmake -B build -G Ninja                                                       \
+          -D CMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm/bin/clang-${{matrix.compiler}} \
+          -D CMAKE_CXX_STANDARD=11                                                    \
+          -D CMAKE_BUILD_TYPE=Release                                                 \
+          -D GLFW_BUILD_EXAMPLES=OFF                                                  \
+          -D GLFW_BUILD_TESTS=OFF                                                     \
+          -D GLFW_BUILD_DOCS=OFF                                                      \
           -D GLFW_INSTALL=ON
         cmake --build build --parallel
         sudo cmake --install build
 
         cd ../glslang
-        cmake -B build -G Ninja                                                         \
-          -D CMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm/bin/clang++-${{matrix.compiler}} \
-          -D CMAKE_CXX_STANDARD=11                                                      \
-          -D CMAKE_BUILD_TYPE=Release                                                   \
-          -D ENABLE_OPT=OFF                                                             \
-          -D GLSLANG_TESTS_DEFAULT=OFF                                                  \
+        cmake -B build -G Ninja                                                       \
+          -D CMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm/bin/clang-${{matrix.compiler}} \
+          -D CMAKE_CXX_STANDARD=11                                                    \
+          -D CMAKE_BUILD_TYPE=Release                                                 \
+          -D ENABLE_OPT=OFF                                                           \
+          -D GLSLANG_TESTS_DEFAULT=OFF                                                \
           -D GLSLANG_ENABLE_INSTALL_DEFAULT=ON
         cmake --build build --parallel
         sudo cmake --install build
@@ -68,29 +68,29 @@ jobs:
 
     - name: Generate headers
       run: |
-        cmake -B build -G Ninja                                                         \
-          -D VULKAN_HPP_GENERATOR_BUILD=ON                                              \
-          -D VULKAN_HPP_RUN_GENERATOR=OFF                                               \
-          -D VULKAN_HPP_SAMPLES_BUILD=OFF                                               \
-          -D VULKAN_HPP_TESTS_BUILD=OFF                                                 \
-          -D VULKAN_HPP_DISPATCH_LOADER_DYNAMIC=ON                                      \
-          -D VULKAN_HPP_BUILD_WITH_LOCAL_VULKAN_HPP=ON                                  \
-          -D VULKAN_HPP_PRECOMPILE=OFF                                                  \
-          -D CMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm/bin/clang++-${{matrix.compiler}} \
-          -D CMAKE_CXX_STANDARD=20                                                      \
+        cmake -B build -G Ninja                                                       \
+          -D VULKAN_HPP_GENERATOR_BUILD=ON                                            \
+          -D VULKAN_HPP_RUN_GENERATOR=OFF                                             \
+          -D VULKAN_HPP_SAMPLES_BUILD=OFF                                             \
+          -D VULKAN_HPP_TESTS_BUILD=OFF                                               \
+          -D VULKAN_HPP_DISPATCH_LOADER_DYNAMIC=ON                                    \
+          -D VULKAN_HPP_BUILD_WITH_LOCAL_VULKAN_HPP=ON                                \
+          -D VULKAN_HPP_PRECOMPILE=OFF                                                \
+          -D CMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm/bin/clang-${{matrix.compiler}} \
+          -D CMAKE_CXX_STANDARD=20                                                    \
           -D CMAKE_BUILD_TYPE=Debug
         cmake --build build --parallel
 
-        cmake -B build -G Ninja --fresh                                                 \
-          -D VULKAN_HPP_GENERATOR_BUILD=ON                                              \
-          -D VULKAN_HPP_RUN_GENERATOR=ON                                                \
-          -D VULKAN_HPP_SAMPLES_BUILD=OFF                                               \
-          -D VULKAN_HPP_TESTS_BUILD=OFF                                                 \
-          -D VULKAN_HPP_DISPATCH_LOADER_DYNAMIC=ON                                      \
-          -D VULKAN_HPP_BUILD_WITH_LOCAL_VULKAN_HPP=ON                                  \
-          -D VULKAN_HPP_PRECOMPILE=OFF                                                  \
-          -D CMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm/bin/clang++-${{matrix.compiler}} \
-          -D CMAKE_CXX_STANDARD=20                                                      \
+        cmake -B build -G Ninja --fresh                                               \
+          -D VULKAN_HPP_GENERATOR_BUILD=ON                                            \
+          -D VULKAN_HPP_RUN_GENERATOR=ON                                              \
+          -D VULKAN_HPP_SAMPLES_BUILD=OFF                                             \
+          -D VULKAN_HPP_TESTS_BUILD=OFF                                               \
+          -D VULKAN_HPP_DISPATCH_LOADER_DYNAMIC=ON                                    \
+          -D VULKAN_HPP_BUILD_WITH_LOCAL_VULKAN_HPP=ON                                \
+          -D VULKAN_HPP_PRECOMPILE=OFF                                                \
+          -D CMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm/bin/clang-${{matrix.compiler}} \
+          -D CMAKE_CXX_STANDARD=20                                                    \
           -D CMAKE_BUILD_TYPE=Release
         cmake --build build --parallel --clean-first
 
@@ -107,18 +107,18 @@ jobs:
               CXX_MODULES=OFF
             fi
 
-            cmake -B build -G Ninja --fresh                                                 \
-              -D VULKAN_HPP_BUILD_CXX_MODULE=$CXX_MODULES                                   \
-              -D VULKAN_HPP_GENERATOR_BUILD=OFF                                             \
-              -D VULKAN_HPP_RUN_GENERATOR=OFF                                               \
-              -D VULKAN_HPP_SAMPLES_BUILD=OFF                                               \
-              -D VULKAN_HPP_TESTS_BUILD=ON                                                  \
-              -D VULKAN_HPP_TESTS_CTEST=ON                                                  \
-              -D VULKAN_HPP_DISPATCH_LOADER_DYNAMIC=ON                                      \
-              -D VULKAN_HPP_BUILD_WITH_LOCAL_VULKAN_HPP=ON                                  \
-              -D VULKAN_HPP_PRECOMPILE=OFF                                                  \
-              -D CMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm/bin/clang++-${{matrix.compiler}} \
-              -D CMAKE_CXX_STANDARD=$CXX_STANDARD                                           \
+            cmake -B build -G Ninja --fresh                                               \
+              -D VULKAN_HPP_BUILD_CXX_MODULE=$CXX_MODULES                                 \
+              -D VULKAN_HPP_GENERATOR_BUILD=OFF                                           \
+              -D VULKAN_HPP_RUN_GENERATOR=OFF                                             \
+              -D VULKAN_HPP_SAMPLES_BUILD=OFF                                             \
+              -D VULKAN_HPP_TESTS_BUILD=ON                                                \
+              -D VULKAN_HPP_TESTS_CTEST=ON                                                \
+              -D VULKAN_HPP_DISPATCH_LOADER_DYNAMIC=ON                                    \
+              -D VULKAN_HPP_BUILD_WITH_LOCAL_VULKAN_HPP=ON                                \
+              -D VULKAN_HPP_PRECOMPILE=OFF                                                \
+              -D CMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm/bin/clang-${{matrix.compiler}} \
+              -D CMAKE_CXX_STANDARD=$CXX_STANDARD                                         \
               -D CMAKE_BUILD_TYPE=$BUILD_TYPE
             cmake --build build --parallel --clean-first
             ctest -j --output-on-failure --test-dir build
