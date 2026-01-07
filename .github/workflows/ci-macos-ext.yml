@@ -97,7 +97,6 @@ jobs:
 
     - name: Build samples and tests
       run: |
-        export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
         export LDFLAGS="-L/opt/homebrew/opt/llvm/lib/c++ -L/opt/homebrew/opt/llvm/lib/unwind -lunwind"
         for CXX_STANDARD in 23; do
           for BUILD_TYPE in Debug Release; do
@@ -122,7 +121,7 @@ jobs:
               -D VULKAN_HPP_PRECOMPILE=OFF                                                        \
               -D CMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm/bin/clang++                            \
               -D CMAKE_CXX_STANDARD=$CXX_STANDARD                                                 \
-              -D CMAKE_CXX_FLAGS=-stdlib=libc++                                                   \
+              -D CMAKE_CXX_FLAGS=-I/opt/homebrew/opt/llvm/include                                 \
               -D CMAKE_BUILD_TYPE=$BUILD_TYPE                                                     \
               -D CMAKE_CXX_STDLIB_MODULES_JSON=/opt/homebrew/opt/llvm/lib/c++/libc++.modules.json \
               -D CMAKE_EXPERIMENTAL_CXX_IMPORT_STD=d0edc3af-4c50-42ea-a356-e2862fe7a444
