@@ -22,7 +22,6 @@ jobs:
     - name: Install libraries
       run: |
         brew install clang-format molten-vk llvm@${{matrix.compiler}}
-        /opt/homebrew/opt/llvm/bin/clang++ -print-file-name=libc++.modules.json
         find /opt/homebrew/ -name libc++.modules.json
 
     - name: Install Ninja
@@ -125,7 +124,7 @@ jobs:
               -D CMAKE_CXX_STANDARD=$CXX_STANDARD                                                 \
               -D CMAKE_CXX_FLAGS=-stdlib=libc++                                                   \
               -D CMAKE_BUILD_TYPE=$BUILD_TYPE                                                     \
-              -D CMAKE_CXX_STDLIB_MODULES_JSON=/opt/homebrew/opt/llvm/lib/c++/libc++.modules.json \
+              -D CMAKE_CXX_STDLIB_MODULES_JSON=/opt/homebrew/Cellar/llvm/21.1.8/lib/c++/libc++.modules.json \
               -D CMAKE_EXPERIMENTAL_CXX_IMPORT_STD=d0edc3af-4c50-42ea-a356-e2862fe7a444
             cmake --build build --parallel --clean-first
             ctest -j --output-on-failure --test-dir build
