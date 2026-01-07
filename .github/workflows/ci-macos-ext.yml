@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         os: [macos-26]
-        compiler: [21] # TODO: 18, 19, 20
+        compiler: [21]
 
     steps:
     - uses: actions/checkout@v4
@@ -94,7 +94,7 @@ jobs:
           -D CMAKE_BUILD_TYPE=Release
         cmake --build build --parallel --clean-first
 
-    - name: Build samples and tests # TODO: C++11 to C++20
+    - name: Build samples and tests
       run: |
         export LDFLAGS="-L/opt/homebrew/opt/llvm/lib/c++ -L/opt/homebrew/opt/llvm/lib/unwind -lunwind"
         for CXX_STANDARD in 23; do
@@ -121,7 +121,6 @@ jobs:
               -D CMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm/bin/clang++                    \
               -D CMAKE_CXX_STANDARD=$CXX_STANDARD                                         \
               -D CMAKE_BUILD_TYPE=$BUILD_TYPE                                             \
-              -D CMAKE_EXE_LINKER_FLAGS="-L/opt/homebrew/opt/llvm/lib/c++ -L/opt/homebrew/opt/llvm/lib/unwind -lunwind" \
               -D CMAKE_EXPERIMENTAL_CXX_IMPORT_STD=d0edc3af-4c50-42ea-a356-e2862fe7a444
             cmake --build build --parallel --clean-first
             ctest -j --output-on-failure --test-dir build

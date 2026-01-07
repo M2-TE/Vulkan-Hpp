@@ -41,7 +41,7 @@ option( VULKAN_HPP_SAMPLES_BUILD "Build samples" OFF )
 option( VULKAN_HPP_TESTS_BUILD "Build tests" OFF )
 option( VULKAN_HPP_TESTS_CTEST "Build tests for ctest, enabling wider test coverage" OFF )
 option( VULKAN_HPP_BUILD_WITH_LOCAL_VULKAN_HPP "Build with local Vulkan headers" ON )
-cmake_dependent_option( VULKAN_HPP_BUILD_CXX_MODULE "Build and test the C++ named module." ON [[ TARGET __CMAKE::CXX23 ]] OFF)
+option( VULKAN_HPP_BUILD_CXX_MODULE "Build and test the C++ named module." OFF)
 
 # options for vulkan hpp compile definitions (see https://github.com/KhronosGroup/Vulkan-Hpp/tree/main?tab=readme-ov-file#configuration-options for details)
 option( VULKAN_HPP_DISABLE_ENHANCED_MODE "Disable all enhanced functionality apart from scoped enums, bitmasks, default initialization and vk::StructureChain" OFF )
@@ -565,7 +565,6 @@ function( vulkan_hpp__setup_test )
 					-D VULKAN_HPP_TYPESAFE_CONVERSION=${VULKAN_HPP_TYPESAFE_CONVERSION}
 					-D VULKAN_HPP_USE_REFLECT=${VULKAN_HPP_USE_REFLECT}
 					# forward compiler setup
-					-D CMAKE_EXE_LINKER_FLAGS=${CMAKE_EXE_LINKER_FLAGS}
 					-D CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
 					-D CMAKE_CXX_STANDARD=${CMAKE_CXX_STANDARD}
 					-D CMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
