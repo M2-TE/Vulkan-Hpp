@@ -21,7 +21,7 @@ jobs:
 
     - name: Install libraries
       run: |
-        brew install clang-format molten-vk
+        brew install clang-format molten-vk llvm
 
     - name: Install Ninja
       uses: ashutoshvarma/setup-ninja@master
