@@ -23,7 +23,7 @@ jobs:
       run: |
         brew install clang-format molten-vk llvm@${{matrix.compiler}}
         /opt/homebrew/opt/llvm/bin/clang++ -print-file-name=libc++.modules.json
-        find /opt/homebrew/opt -name libc++.modules.json
+        ls /opt/homebrew/opt/llvm/lib/c++/
 
     - name: Install Ninja
       uses: ashutoshvarma/setup-ninja@master
@@ -111,21 +111,21 @@ jobs:
               CXX_MODULES=OFF
             fi
 
-            cmake -B build -G Ninja --fresh                                                   \
-              -D VULKAN_HPP_BUILD_CXX_MODULE=$CXX_MODULES                                     \
-              -D VULKAN_HPP_GENERATOR_BUILD=OFF                                               \
-              -D VULKAN_HPP_RUN_GENERATOR=OFF                                                 \
-              -D VULKAN_HPP_SAMPLES_BUILD=OFF                                                 \
-              -D VULKAN_HPP_TESTS_BUILD=ON                                                    \
-              -D VULKAN_HPP_TESTS_CTEST=ON                                                    \
-              -D VULKAN_HPP_DISPATCH_LOADER_DYNAMIC=ON                                        \
-              -D VULKAN_HPP_BUILD_WITH_LOCAL_VULKAN_HPP=ON                                    \
-              -D VULKAN_HPP_PRECOMPILE=OFF                                                    \
-              -D CMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm/bin/clang++                        \
-              -D CMAKE_CXX_STANDARD=$CXX_STANDARD                                             \
-              -D CMAKE_CXX_FLAGS=-stdlib=libc++                                               \
-              -D CMAKE_BUILD_TYPE=$BUILD_TYPE                                                 \
-              -D CMAKE_CXX_STDLIB_MODULES_JSON=/opt/homebrew/opt/llvm/lib/libc++.modules.json \
+            cmake -B build -G Ninja --fresh                                                       \
+              -D VULKAN_HPP_BUILD_CXX_MODULE=$CXX_MODULES                                         \
+              -D VULKAN_HPP_GENERATOR_BUILD=OFF                                                   \
+              -D VULKAN_HPP_RUN_GENERATOR=OFF                                                     \
+              -D VULKAN_HPP_SAMPLES_BUILD=OFF                                                     \
+              -D VULKAN_HPP_TESTS_BUILD=ON                                                        \
+              -D VULKAN_HPP_TESTS_CTEST=ON                                                        \
+              -D VULKAN_HPP_DISPATCH_LOADER_DYNAMIC=ON                                            \
+              -D VULKAN_HPP_BUILD_WITH_LOCAL_VULKAN_HPP=ON                                        \
+              -D VULKAN_HPP_PRECOMPILE=OFF                                                        \
+              -D CMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm/bin/clang++                            \
+              -D CMAKE_CXX_STANDARD=$CXX_STANDARD                                                 \
+              -D CMAKE_CXX_FLAGS=-stdlib=libc++                                                   \
+              -D CMAKE_BUILD_TYPE=$BUILD_TYPE                                                     \
+              -D CMAKE_CXX_STDLIB_MODULES_JSON=/opt/homebrew/opt/llvm/lib/c++/libc++.modules.json \
               -D CMAKE_EXPERIMENTAL_CXX_IMPORT_STD=d0edc3af-4c50-42ea-a356-e2862fe7a444
             cmake --build build --parallel --clean-first
             ctest -j --output-on-failure --test-dir build
