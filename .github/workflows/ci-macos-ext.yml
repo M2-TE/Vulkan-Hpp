@@ -32,11 +32,11 @@ jobs:
       run: |
         export LDFLAGS="-L/opt/homebrew/opt/llvm/lib/c++ -L/opt/homebrew/opt/llvm/lib/unwind -lunwind"
         cd glm
-        cmake -B build -G Ninja                                \
-          -D CMAKE_C_COMPILER=/opt/homebrew/opt/llvm/bin/clang \
-          -D CMAKE_BUILD_TYPE=Release                          \
-          -D GLM_BUILD_LIBRARY=ON                              \
-          -D GLM_BUILD_INSTALL=ON                              \
+        cmake -B build -G Ninja                                    \
+          -D CMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm/bin/clang++ \
+          -D CMAKE_BUILD_TYPE=Release                              \
+          -D GLM_BUILD_LIBRARY=ON                                  \
+          -D GLM_BUILD_INSTALL=ON                                  \
           -D GLM_BUILD_TESTS=OFF
         cmake --build build --parallel
         sudo cmake --install build
@@ -56,7 +56,6 @@ jobs:
         cmake -B build -G Ninja                                    \
           -D CMAKE_C_COMPILER=/opt/homebrew/opt/llvm/bin/clang     \
           -D CMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm/bin/clang++ \
-          -D CMAKE_CXX_FLAGS=-stdlib=libc++                        \
           -D CMAKE_CXX_STANDARD=11                                 \
           -D CMAKE_BUILD_TYPE=Release                              \
           -D ENABLE_OPT=OFF                                        \
@@ -121,10 +120,9 @@ jobs:
               -D VULKAN_HPP_PRECOMPILE=OFF                                                \
               -D CMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm/bin/clang-${{matrix.compiler}} \
               -D CMAKE_CXX_STANDARD=$CXX_STANDARD                                         \
-              -D CMAKE_CXX_FLAGS=-stdlib=libc++                                           \
               -D CMAKE_BUILD_TYPE=$BUILD_TYPE                                             \
               -D CMAKE_EXPERIMENTAL_CXX_IMPORT_STD=d0edc3af-4c50-42ea-a356-e2862fe7a444
             cmake --build build --parallel --clean-first
-            ctest -j --output-on-failure --test-dir build
+            ctest -j --output-on-failure --test-dir build --build-options "-DCMAKE_EXE_LINKER_FLAGS=-L/opt/homebrew/opt/llvm/lib/c++ -L/opt/homebrew/opt/llvm/lib/unwind -lunwind"
           done
         done
