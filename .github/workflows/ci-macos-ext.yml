@@ -23,8 +23,14 @@ jobs:
       run: |
         brew install clang-format molten-vk llvm@${{matrix.compiler}}
         /opt/homebrew/opt/llvm/bin/clang++ -print-file-name=libc++.modules.json
-        ls /opt/homebrew/opt/llvm/lib
-        ls /opt/homebrew/opt/llvm/bin
+        echo "/usr/lib"
+        ls /usr/lib
+        echo "/usr/lib64"
+        ls /usr/lib64
+        echo "/lib64"
+        ls /lib64
+        echo "/lib"
+        ls /lib
 
     - name: Install Ninja
       uses: ashutoshvarma/setup-ninja@master
