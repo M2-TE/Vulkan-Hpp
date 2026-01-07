@@ -12,7 +12,6 @@ jobs:
     strategy:
       matrix:
         os: [macos-26]
-        compiler: [21]
 
     steps:
     - uses: actions/checkout@v4
@@ -21,8 +20,7 @@ jobs:
 
     - name: Install libraries
       run: |
-        brew install clang-format molten-vk llvm@${{matrix.compiler}}
-        find /opt/homebrew/ -name libc++.modules.json
+        brew install clang-format molten-vk llvm lld
 
     - name: Install Ninja
       uses: ashutoshvarma/setup-ninja@master
@@ -123,6 +121,7 @@ jobs:
               -D CMAKE_CXX_STANDARD=$CXX_STANDARD                                                 \
               -D CMAKE_CXX_FLAGS=-I/opt/homebrew/opt/llvm/include                                 \
               -D CMAKE_BUILD_TYPE=$BUILD_TYPE                                                     \
+              -D CMAKE_CXX_STDLIB_MODULES_JSON=/opt/homebrew/opt/llvm/lib/c++/libc++.modules.json \
               -D CMAKE_EXPERIMENTAL_CXX_IMPORT_STD=d0edc3af-4c50-42ea-a356-e2862fe7a444
             cmake --build build --parallel --clean-first
             ctest -j --output-on-failure --test-dir build
