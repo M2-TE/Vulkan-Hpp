@@ -25,10 +25,6 @@ jobs:
         /opt/homebrew/opt/llvm/bin/clang++ -print-file-name=libc++.modules.json
         echo "/usr/lib"
         ls /usr/lib
-        echo "/usr/lib64"
-        ls /usr/lib64
-        echo "/lib64"
-        ls /lib64
         echo "/lib"
         ls /lib
 
