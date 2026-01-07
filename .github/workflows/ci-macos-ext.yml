@@ -96,6 +96,7 @@ jobs:
 
     - name: Build samples and tests
       run: |
+        export CMAKE_PREFIX_PATH="/opt/homebrew/opt/llvm"
         export LDFLAGS="-L/opt/homebrew/opt/llvm/lib/c++ -L/opt/homebrew/opt/llvm/lib/unwind -lunwind"
         for CXX_STANDARD in 23; do
           for BUILD_TYPE in Debug Release; do
