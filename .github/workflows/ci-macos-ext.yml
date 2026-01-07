@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         os: [macos-26]
-        compiler: [20, 21]
+        compiler: [21]
 
     steps:
     - uses: actions/checkout@v4
