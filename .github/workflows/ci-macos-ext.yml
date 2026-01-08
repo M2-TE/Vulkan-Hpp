@@ -117,7 +117,7 @@ jobs:
               -D VULKAN_HPP_PRECOMPILE=OFF                                                        \
               -D CMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm/bin/clang++                            \
               -D CMAKE_CXX_STANDARD=$CXX_STANDARD                                                 \
-              -D CMAKE_CXX_FLAGS=-I/opt/homebrew/opt/llvm/include/c++/v1                          \
+              -D CMAKE_CXX_FLAGS="-I/opt/homebrew/opt/llvm/include/c++/v1 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk" \
               -D CMAKE_BUILD_TYPE=$BUILD_TYPE                                                     \
               -D CMAKE_EXPERIMENTAL_CXX_IMPORT_STD=d0edc3af-4c50-42ea-a356-e2862fe7a444
             cmake --build build --parallel --clean-first
