@@ -21,6 +21,10 @@ jobs:
     - name: Install libraries
       run: |
         brew install clang-format molten-vk llvm
+        CMAKE_FIX=`which cmake`
+        ls `dirname $CMAKE_FIX`/../share/cmake-4.1
+        CMAKE_FIX="`dirname $CMAKE_FIX`/../share/cmake-4.1/Modules/Compiler/Clang-CXX-CXXImportStd.cmake"
+        sed -i '' 's|\${_clang_modules_json_impl}.modules.json|/opt/homebrew/opt/llvm/lib/c++/libc++.modules.json|g' $CMAKE_FIX # https://gitlab.kitware.com/cmake/cmake/-/issues/25965#note_1523575
 
     - name: Install Ninja
       uses: ashutoshvarma/setup-ninja@master
@@ -102,13 +106,8 @@ jobs:
             echo "Building C++$CXX_STANDARD in $BUILD_TYPE"
             echo "================================================================================="
 
-            CXX_MODULES=ON
-            if [ $CXX_STANDARD -lt 23 ]; then
-              CXX_MODULES=OFF
-            fi
-
             cmake -B build -G Ninja --fresh                                                       \
-              -D VULKAN_HPP_BUILD_CXX_MODULE=$CXX_MODULES                                         \
+              -D VULKAN_HPP_BUILD_CXX_MODULE=ON                                                   \
               -D VULKAN_HPP_GENERATOR_BUILD=OFF                                                   \
               -D VULKAN_HPP_RUN_GENERATOR=OFF                                                     \
               -D VULKAN_HPP_SAMPLES_BUILD=OFF                                                     \
@@ -119,7 +118,7 @@ jobs:
               -D VULKAN_HPP_PRECOMPILE=OFF                                                        \
               -D CMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm/bin/clang++                            \
               -D CMAKE_CXX_STANDARD=$CXX_STANDARD                                                 \
-              -D CMAKE_CXX_FLAGS=-I/opt/homebrew/Cellar/llvm/21.1.8/lib/clang/21/include/         \
+              -D CMAKE_CXX_FLAGS=-I/opt/homebrew/opt/llvm/include/c++/v1                          \
               -D CMAKE_BUILD_TYPE=$BUILD_TYPE                                                     \
               -D CMAKE_CXX_STDLIB_MODULES_JSON=/opt/homebrew/opt/llvm/lib/c++/libc++.modules.json \
               -D CMAKE_EXPERIMENTAL_CXX_IMPORT_STD=d0edc3af-4c50-42ea-a356-e2862fe7a444
