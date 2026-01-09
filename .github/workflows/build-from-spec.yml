@@ -16,7 +16,8 @@ jobs:
 
       - name: Checkout Vulkan-Hpp
         uses: actions/checkout@v4
-        run: git submodule update --init --recursive -- tinyxml2
+        with:
+          submodules: recursive
 
       - name: Checkout Vulkan-Docs
         run: |
