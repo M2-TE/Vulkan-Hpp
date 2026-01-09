@@ -10,6 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     container: khronosgroup/docker-images@sha256:0f91e60e1af2bdd889783af3907f63279c08f573f2eccbc31094e348d1a32a4f
 
+    defaults:
+      run:
+        shell: bash
+        working-directory: /tmp
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -21,14 +26,14 @@ jobs:
 
       - name: Generate Vulkan Headers
         run: |
-          git clone https://github.com/KhronosGroup/Vulkan-Docs.git
+          git clone https://github.com/KhronosGroup/Vulkan-Docs.git --depth 1
           cd Vulkan-Docs/xml
-          make install codec_headers
+          make clean install codec_headers
           cd ../..
 
-          # Copy over to Vulkan-Headers (makes it easier for Vulkan-Hpp)
-          rm -rf Vulkan-Headers/include/ # to catch issues with missing headers
-          cp -r Vulkan-Docs/gen/include Vulkan-Headers/include/
+          # Copy headers to Vulkan-Headers (makes it easier for Vulkan-Hpp)
+          rm -rf Vulkan-Headers/include/
+          cp -r Vulkan-Docs/gen/include/ Vulkan-Headers/include/
           
       - name: Generate Vulkan-Hpp and Build Samples/Tests
         run: |
@@ -47,3 +52,4 @@ jobs:
           -D CMAKE_CXX_STANDARD=23                     \
           -D CMAKE_BUILD_TYPE=Release
           cmake --build build --parallel
+          ctest -j --output-on-failure --test-dir build
