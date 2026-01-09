@@ -22,7 +22,7 @@ jobs:
       - name: Generate Vulkan Headers
         run: |
           # Vulkan-Hpp generator does not like the "__w" directory, so we work in /tmp
-          cp -r ${GITHUB_WORKSPACE}/Vulkan-Hpp /tmp/Vulkan-Hpp
+          cp -r ${GITHUB_WORKSPACE} /tmp/Vulkan-Hpp
           cd /tmp/Vulkan-Hpp
 
           # Generate the headers
