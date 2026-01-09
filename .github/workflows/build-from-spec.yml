@@ -17,7 +17,7 @@ jobs:
           submodules: recursive
 
       - name: Install libraries
-        run: apt update && apt install -y libgl-dev libxcursor-dev libxi-dev libxinerama-dev libxrandr-dev
+        run: apt update && apt install -y libgl-dev libxcursor-dev libxi-dev libxinerama-dev libxrandr-dev gcc g++
 
       - name: Generate Vulkan Headers
         run: |
