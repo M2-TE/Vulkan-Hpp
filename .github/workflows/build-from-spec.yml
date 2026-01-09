@@ -11,14 +11,14 @@ jobs:
     container: khronosgroup/docker-images@sha256:0f91e60e1af2bdd889783af3907f63279c08f573f2eccbc31094e348d1a32a4f
 
     steps:
-      - name: Install libraries
-        run: apt update && apt install -y libgl-dev libxcursor-dev libxi-dev libxinerama-dev libxrandr-dev
-
       - name: Checkout
         uses: actions/checkout@v4
         with:
           submodules: recursive
-      
+
+      - name: Install libraries
+        run: apt update && apt install -y libgl-dev libxcursor-dev libxi-dev libxinerama-dev libxrandr-dev
+
       - name: Generate Vulkan Headers
         run: |
           git clone https://github.com/KhronosGroup/Vulkan-Docs.git
@@ -26,15 +26,14 @@ jobs:
           make install codec_headers
           cd ../..
 
-      - name: Copy Vulkan Headers
-        run: |
+          # Copy over to Vulkan-Headers (makes it easier for Vulkan-Hpp)
           rm -rf Vulkan-Headers/include/ # to catch issues with missing headers
           cp -r Vulkan-Docs/gen/include Vulkan-Headers/include/
           
       - name: Generate Vulkan-Hpp and Build Samples/Tests
         run: |
           cmake -B build -G Ninja                      \
-          -D VulkanRegistry_DIR=Vulkan-Docs/xml        \
+          -D VulkanRegistry_DIR=${PWD}/Vulkan-Docs/xml \
           -D VULKAN_HPP_GENERATOR_BUILD=ON             \
           -D VULKAN_HPP_RUN_GENERATOR=ON               \
           -D VULKAN_HPP_SAMPLES_BUILD=ON               \
