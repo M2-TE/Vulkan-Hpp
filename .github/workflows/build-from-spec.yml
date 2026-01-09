@@ -35,6 +35,7 @@ jobs:
           
       - name: Generate Vulkan-Hpp and Build Samples/Tests
         run: |
+          cd /tmp/Vulkan-Hpp
           cmake -B build -G Ninja                      \
           -D VulkanRegistry_DIR=${PWD}/Vulkan-Docs/xml \
           -D VULKAN_HPP_GENERATOR_BUILD=ON             \
