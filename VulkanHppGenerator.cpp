@@ -8511,7 +8511,7 @@ std::string VulkanHppGenerator::generateHandleEmpty( HandleData const & handleDa
       {
         auto commandIt = m_commands.find( command );
         assert( commandIt != m_commands.end() );
-        str += "\n"s + generateCommand( commandIt->first, commandIt->second, 0, false, false );
+        str += std::string("\n") + generateCommand( commandIt->first, commandIt->second, 0, false, false );
       }
     }
   }
