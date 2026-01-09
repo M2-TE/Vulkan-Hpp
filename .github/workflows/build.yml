@@ -116,7 +116,7 @@ jobs:
               continue
             fi
 
-            if [ $CXX_STANDARD -lt 23 ] && [ ${{matrix.env.modules && true || false}} ]; then
+            if [ $CXX_STANDARD -lt 23 ] && ${{matrix.env.modules && true || false}}; then
               continue
             fi
           
