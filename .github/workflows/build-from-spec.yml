@@ -12,20 +12,21 @@ jobs:
 
     defaults:
       run:
-        shell: bash
-        working-directory: /tmp
+        working-directory: /tmp # Vulkan-Hpp generator does not like the "__w" directory
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           submodules: recursive
+          path: /tmp/Vulkan-Hpp
 
       - name: Install libraries
         run: apt update && apt install -y libgl-dev libxcursor-dev libxi-dev libxinerama-dev libxrandr-dev
 
       - name: Generate Vulkan Headers
         run: |
+          cd Vulkan-Hpp
           git clone https://github.com/KhronosGroup/Vulkan-Docs.git --depth 1
           cd Vulkan-Docs/xml
           make clean install codec_headers
