@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Install libraries
-        run: apt update && apt install libgl-dev libxcursor-dev libxi-dev libxinerama-dev libxrandr-dev
+        run: apt update && apt install -y libgl-dev libxcursor-dev libxi-dev libxinerama-dev libxrandr-dev
 
       - name: Checkout Vulkan-Hpp
         uses: actions/checkout@v4
