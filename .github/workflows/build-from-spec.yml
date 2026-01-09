@@ -1,0 +1,50 @@
+name: CI Generate Spec
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: khronosgroup/docker-images@sha256:0f91e60e1af2bdd889783af3907f63279c08f573f2eccbc31094e348d1a32a4f
+
+    steps:
+      - name: Install libraries
+        run: sudo apt update && sudo apt install libgl-dev libxcursor-dev libxi-dev libxinerama-dev libxrandr-dev
+
+      - name: Checkout Vulkan-Hpp
+        uses: actions/checkout@v4
+        run: git submodule update --init --recursive -- tinyxml2
+
+      - name: Checkout Vulkan-Docs
+        run: |
+          git clone https://github.com/KhronosGroup/Vulkan-Docs.git
+      
+      - name: Generate Vulkan Spec
+        run: |
+          cd Vulkan-Docs
+          # don't we only need "registry"?
+          ./makeSpec -clean -spec all QUIET= -j${nproc} -Otarget manhtmlpages validusage styleguide registry chunked html
+          # removed "install" target
+          make -C xml codec_headers test vtest
+          cd ..
+          
+      - name: Generate Vulkan-Hpp and Build Samples/Tests
+        run: |
+          cmake -B build -G Ninja                      \
+          -D VulkanRegistry_DIR=Vulkan-Docs/xml        \
+          -D VULKAN_HPP_GENERATOR_BUILD=ON             \
+          -D VULKAN_HPP_RUN_GENERATOR=ON               \
+          -D VULKAN_HPP_SAMPLES_BUILD=ON               \
+          -D VULKAN_HPP_TESTS_BUILD=ON                 \
+          -D VULKAN_HPP_TESTS_CTEST=ON                 \
+          -D VULKAN_HPP_DISPATCH_LOADER_DYNAMIC=ON     \
+          -D VULKAN_HPP_BUILD_WITH_LOCAL_VULKAN_HPP=ON \
+          -D VULKAN_HPP_PRECOMPILE=OFF                 \
+          -D CMAKE_C_COMPILER=gcc                      \
+          -D CMAKE_CXX_COMPILER=g++                    \
+          -D CMAKE_CXX_STANDARD=23                     \
+          -D CMAKE_BUILD_TYPE=Release
+          cmake --build build --parallel
