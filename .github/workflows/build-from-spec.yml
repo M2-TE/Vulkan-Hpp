@@ -10,27 +10,24 @@ jobs:
     runs-on: ubuntu-latest
     container: khronosgroup/docker-images@sha256:0f91e60e1af2bdd889783af3907f63279c08f573f2eccbc31094e348d1a32a4f
 
-    defaults:
-      run:
-        working-directory: /tmp # Vulkan-Hpp generator does not like the "__w" directory
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           submodules: recursive
-          path: /tmp/Vulkan-Hpp
 
       - name: Install libraries
         run: apt update && apt install -y libgl-dev libxcursor-dev libxi-dev libxinerama-dev libxrandr-dev
 
       - name: Generate Vulkan Headers
         run: |
-          cd Vulkan-Hpp
+          # Vulkan-Hpp generator does not like the "__w" directory, so we work in /tmp
+          cp -r ${GITHUB_WORKSPACE}/Vulkan-Hpp /tmp/Vulkan-Hpp
+          cd /tmp/Vulkan-Hpp
+
+          # Generate the headers
           git clone https://github.com/KhronosGroup/Vulkan-Docs.git --depth 1
-          cd Vulkan-Docs/xml
-          make clean install codec_headers
-          cd ../..
+          make -C Vulkan-Docs/xml clean install codec_headers
 
           # Copy headers to Vulkan-Headers (makes it easier for Vulkan-Hpp)
           rm -rf Vulkan-Headers/include/
