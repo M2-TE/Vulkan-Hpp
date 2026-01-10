@@ -25,7 +25,7 @@ jobs:
           # Copy headers and xml registry to Vulkan-Headers (makes it easier for Vulkan-Hpp)
           rm -rf Vulkan-Headers/include/ Vulkan-Headers/registry
           cp -r Vulkan-Docs/gen/include/ Vulkan-Headers/include/
-          cp -r Vulkan-Docs/xml Vulkan-Headers/registry/
+          # cp -r Vulkan-Docs/xml Vulkan-Headers/registry/
           
       - name: Generate Vulkan-Hpp and Build Samples/Tests
         run: |
