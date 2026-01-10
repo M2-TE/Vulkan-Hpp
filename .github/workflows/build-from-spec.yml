@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: khronosgroup/docker-images@sha256:0f91e60e1af2bdd889783af3907f63279c08f573f2eccbc31094e348d1a32a4f
+    container: khronosgroup/docker-images@sha256:f1ca671f3bdb10ad49e238b9bf28853088a21af49504498fc9084c9b4fea4762
 
     steps:
       - name: Checkout
