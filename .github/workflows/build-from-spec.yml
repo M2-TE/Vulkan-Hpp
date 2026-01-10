@@ -22,14 +22,14 @@ jobs:
           git clone https://github.com/KhronosGroup/Vulkan-Docs.git --depth 1
           make -C Vulkan-Docs/xml clean install codec_headers
 
-          # Copy headers to Vulkan-Headers (makes it easier for Vulkan-Hpp)
-          rm -rf Vulkan-Headers/include/
+          # Copy headers and xml registry to Vulkan-Headers (makes it easier for Vulkan-Hpp)
+          rm -rf Vulkan-Headers/include/ Vulkan-Headers/registry
           cp -r Vulkan-Docs/gen/include/ Vulkan-Headers/include/
+          cp -r Vulkan-Docs/xml Vulkan-Headers/registry/
           
       - name: Generate Vulkan-Hpp and Build Samples/Tests
         run: |
           cmake -B build -G Ninja                      \
-          -D VulkanRegistry_DIR=${PWD}/Vulkan-Docs/xml \
           -D VULKAN_HPP_GENERATOR_BUILD=ON             \
           -D VULKAN_HPP_RUN_GENERATOR=ON               \
           -D VULKAN_HPP_SAMPLES_BUILD=ON               \
