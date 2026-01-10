@@ -16,15 +16,8 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Install libraries
-        run: apt update && apt install -y libgl-dev libxcursor-dev libxi-dev libxinerama-dev libxrandr-dev clang
-
       - name: Generate Vulkan Headers
         run: |
-          # Vulkan-Hpp generator does not like the "__w" directory, so we work in /tmp
-          cp -r ${GITHUB_WORKSPACE} /tmp/Vulkan-Hpp
-          cd /tmp/Vulkan-Hpp
-
           # Generate the headers
           git clone https://github.com/KhronosGroup/Vulkan-Docs.git --depth 1
           make -C Vulkan-Docs/xml clean install codec_headers
@@ -35,7 +28,6 @@ jobs:
           
       - name: Generate Vulkan-Hpp and Build Samples/Tests
         run: |
-          cd /tmp/Vulkan-Hpp
           cmake -B build -G Ninja                      \
           -D VulkanRegistry_DIR=${PWD}/Vulkan-Docs/xml \
           -D VULKAN_HPP_GENERATOR_BUILD=ON             \
@@ -46,8 +38,6 @@ jobs:
           -D VULKAN_HPP_DISPATCH_LOADER_DYNAMIC=ON     \
           -D VULKAN_HPP_BUILD_WITH_LOCAL_VULKAN_HPP=ON \
           -D VULKAN_HPP_PRECOMPILE=OFF                 \
-          -D CMAKE_C_COMPILER=gcc                      \
-          -D CMAKE_CXX_COMPILER=g++                    \
           -D CMAKE_CXX_STANDARD=23                     \
           -D CMAKE_BUILD_TYPE=Release
           cmake --build build --parallel
