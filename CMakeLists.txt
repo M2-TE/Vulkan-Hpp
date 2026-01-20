@@ -34,7 +34,7 @@ if( NOT DEFINED CMAKE_CXX_STANDARD AND PROJECT_IS_TOP_LEVEL )
 endif()
 
 # all the options for this project
-option( VULKAN_HPP_PRECOMPILE "Precompile vulkan.hpp and vulkan_raii.hpp for sample builds" ON )
+option( VULKAN_HPP_PRECOMPILE "Precompile vulkan.hpp and vulkan_raii.hpp for sample builds" OFF )
 option( VULKAN_HPP_RUN_GENERATOR "Run the HPP generator" OFF )
 option( VULKAN_HPP_GENERATOR_BUILD "Build the HPP generator" ${PROJECT_IS_TOP_LEVEL} )
 option( VULKAN_HPP_SAMPLES_BUILD "Build samples" OFF )
