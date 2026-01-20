@@ -15,7 +15,7 @@
 #  include <cstring>  // strcmp
 #endif
 
-namespace VULKAN_HPP_NAMESPACE
+VULKAN_HPP_EXPORT namespace VULKAN_HPP_NAMESPACE
 {
   //===============
   //=== STRUCTS ===
@@ -6842,20 +6842,16 @@ namespace VULKAN_HPP_NAMESPACE
 
   typedef void *( VKAPI_PTR * PFN_AllocationFunction )( void * pUserData, size_t size, size_t alignment, SystemAllocationScope allocationScope );
 
-  typedef void *( VKAPI_PTR * PFN_ReallocationFunction )(
-    void * pUserData, void * pOriginal, size_t size, size_t alignment, SystemAllocationScope allocationScope );
+  typedef void *( VKAPI_PTR *
+                  PFN_ReallocationFunction )( void * pUserData, void * pOriginal, size_t size, size_t alignment, SystemAllocationScope allocationScope );
 
   typedef void( VKAPI_PTR * PFN_FreeFunction )( void * pUserData, void * pMemory );
 
-  typedef void( VKAPI_PTR * PFN_InternalAllocationNotification )( void *                 pUserData,
-                                                                  size_t                 size,
-                                                                  InternalAllocationType allocationType,
-                                                                  SystemAllocationScope  allocationScope );
+  typedef void( VKAPI_PTR * PFN_InternalAllocationNotification )(
+    void * pUserData, size_t size, InternalAllocationType allocationType, SystemAllocationScope allocationScope );
 
-  typedef void( VKAPI_PTR * PFN_InternalFreeNotification )( void *                 pUserData,
-                                                            size_t                 size,
-                                                            InternalAllocationType allocationType,
-                                                            SystemAllocationScope  allocationScope );
+  typedef void( VKAPI_PTR *
+                PFN_InternalFreeNotification )( void * pUserData, size_t size, InternalAllocationType allocationType, SystemAllocationScope allocationScope );
 
   // wrapper struct for struct VkAllocationCallbacks, see https://registry.khronos.org/vulkan/specs/latest/man/html/VkAllocationCallbacks.html
   struct AllocationCallbacks
@@ -203445,5 +203441,6 @@ namespace VULKAN_HPP_NAMESPACE
     using Type = XlibSurfaceCreateInfoKHR;
   };
 #endif /*VK_USE_PLATFORM_XLIB_KHR*/
+
 }  // namespace VULKAN_HPP_NAMESPACE
 #endif

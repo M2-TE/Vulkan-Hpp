@@ -139,10 +139,8 @@ void VulkanHppGenerator::generateCppmFile() const
   generateFileFromTemplate( m_api + ".cppm",
                             "CppmTemplate.hpp",
                             { { "api", m_api },
-                              { "hashSpecializations", generateCppModuleHashSpecializations() },
+                              { "vulkan_h", ( m_api == "vulkansc" ) ? "vulkan_sc_core.h" : ( m_api + ".h" ) },
                               { "licenseHeader", m_vulkanLicenseHeader },
-                              { "raiiUsings", generateCppModuleRaiiUsings() },
-                              { "usings", generateCppModuleUsings() },
                               { "pfnCommands", generateCppModuleCommands() } } );
 }
 

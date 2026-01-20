@@ -99,6 +99,12 @@
 #  define VULKAN_HPP_SUPPORT_SPAN
 #endif
 
+#if defined( VULKAN_HPP_CXX_MODULE )
+#  define VULKAN_HPP_EXPORT export
+#else
+#  define VULKAN_HPP_EXPORT
+#endif
+
 #if defined( VULKAN_HPP_CXX_MODULE ) && !( defined( __cpp_modules ) && defined( __cpp_lib_modules ) )
 VULKAN_HPP_COMPILE_WARNING( "This is a non-conforming implementation of C++ named modules and the standard library module." )
 #endif
@@ -275,20 +281,6 @@ VULKAN_HPP_COMPILE_WARNING( "This is a non-conforming implementation of C++ name
 #  endif
 #endif
 
-namespace VULKAN_HPP_NAMESPACE
-{
-  namespace detail
-  {
-    class DispatchLoaderDynamic;
-
-#if !defined( VULKAN_HPP_DEFAULT_DISPATCHER )
-#  if VULKAN_HPP_DISPATCH_LOADER_DYNAMIC == 1
-    extern VULKAN_HPP_STORAGE_API DispatchLoaderDynamic defaultDispatchLoaderDynamic;
-#  endif
-#endif
-  }  // namespace detail
-}  // namespace VULKAN_HPP_NAMESPACE
-
 #if !defined( VULKAN_HPP_DISPATCH_LOADER_DYNAMIC_TYPE )
 #  define VULKAN_HPP_DISPATCH_LOADER_DYNAMIC_TYPE VULKAN_HPP_NAMESPACE::detail::DispatchLoaderDynamic
 #endif
@@ -319,6 +311,8 @@ namespace VULKAN_HPP_NAMESPACE
 #    define VULKAN_HPP_DEFAULT_DISPATCHER ::VULKAN_HPP_NAMESPACE::detail::getDispatchLoaderStatic()
 #    define VULKAN_HPP_DEFAULT_DISPATCH_LOADER_DYNAMIC_STORAGE
 #  endif
+#else
+#  define VULKAN_HPP_DEFAULT_DISPATCHER_HANDLED
 #endif
 
 #if defined( VULKAN_HPP_NO_DEFAULT_DISPATCHER )
