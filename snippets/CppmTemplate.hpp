@@ -4,6 +4,8 @@ module;
 
 #define VULKAN_HPP_CXX_MODULE 1
 
+#include <cassert>
+#include <cstring>
 #include <vulkan/${vulkan_h}>
 #include <vulkan/vulkan_hpp_macros.hpp>
 
@@ -19,6 +21,8 @@ module;
 export module ${api};
 
 export import std;
+
+VULKAN_HPP_STATIC_ASSERT( VK_HEADER_VERSION == ${headerVersion}, "Wrong VK_HEADER_VERSION!" );
 
 #if defined(_MSC_VER)
 #  pragma warning(push)
