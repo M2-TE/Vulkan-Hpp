@@ -101,7 +101,7 @@ jobs:
             ${{matrix.env.linker_flags && format('-D CMAKE_EXE_LINKER_FLAGS=''{0}''', matrix.env.linker_flags)}} \
             -D VULKAN_HPP_GENERATOR_BUILD=ON              \
             -D VULKAN_HPP_RUN_GENERATOR=ON                \
-            -D VULKAN_HPP_SAMPLES_BUILD=ON                \
+            -D VULKAN_HPP_SAMPLES_BUILD=OFF               \
             -D VULKAN_HPP_TESTS_BUILD=OFF                 \
             -D VULKAN_HPP_TESTS_CTEST=ON                  \
             -D VULKAN_HPP_DISPATCH_LOADER_DYNAMIC=ON      \
