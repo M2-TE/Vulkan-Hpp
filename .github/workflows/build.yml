@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    name: ${{matrix.env.modules && '[modules] ' || ' '}}${{matrix.env.os}} ${{matrix.env.arch}}, ${{matrix.env.gen}}, ${{matrix.env.cxx && matrix.env.cxx || 'default'}}
+    name: ${{matrix.env.label}}
     runs-on: ${{matrix.env.os}}
     defaults:
       run:
