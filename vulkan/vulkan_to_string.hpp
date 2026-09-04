@@ -1650,9 +1650,17 @@ VULKAN_HPP_EXPORT namespace VULKAN_HPP_NAMESPACE
     return result;
   }
 
-  VULKAN_HPP_INLINE VULKAN_HPP_CONSTEXPR_20 std::string to_string( PrivateDataSlotCreateFlags )
+  VULKAN_HPP_INLINE std::string to_string( PrivateDataSlotCreateFlags value )
   {
-    return "{}";
+    std::string result = "{";
+    if ( value & PrivateDataSlotCreateFlagBits::eBaseObjectHandleNV )
+      result += " BaseObjectHandleNV |";
+
+    if ( result.size() > 1 )
+      result.back() = '}';
+    else
+      result = "{}";
+    return result;
   }
 
   VULKAN_HPP_INLINE std::string to_string( PipelineStageFlags2 value )
@@ -5915,7 +5923,6 @@ VULKAN_HPP_EXPORT namespace VULKAN_HPP_NAMESPACE
       case StructureType::eLayerSettingsCreateInfoEXT                                  : return "LayerSettingsCreateInfoEXT";
       case StructureType::ePhysicalDeviceShaderCoreBuiltinsFeaturesARM                 : return "PhysicalDeviceShaderCoreBuiltinsFeaturesARM";
       case StructureType::ePhysicalDeviceShaderCoreBuiltinsPropertiesARM               : return "PhysicalDeviceShaderCoreBuiltinsPropertiesARM";
-      case StructureType::ePhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT        : return "PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT";
       case StructureType::ePhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT  : return "PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT";
       case StructureType::ePhysicalDeviceInternallySynchronizedQueuesFeaturesKHR       : return "PhysicalDeviceInternallySynchronizedQueuesFeaturesKHR";
       case StructureType::eLatencySleepModeInfoNV                                      : return "LatencySleepModeInfoNV";
@@ -6174,6 +6181,7 @@ VULKAN_HPP_EXPORT namespace VULKAN_HPP_NAMESPACE
       case StructureType::ePhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT: return "PhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT";
       case StructureType::eComputeOccupancyPriorityParametersNV                    : return "ComputeOccupancyPriorityParametersNV";
       case StructureType::ePhysicalDeviceComputeOccupancyPriorityFeaturesNV        : return "PhysicalDeviceComputeOccupancyPriorityFeaturesNV";
+      case StructureType::ePhysicalDevicePipelineLibraryGroupHandlesFeaturesKHR    : return "PhysicalDevicePipelineLibraryGroupHandlesFeaturesKHR";
       case StructureType::ePhysicalDeviceMaintenance11FeaturesKHR                  : return "PhysicalDeviceMaintenance11FeaturesKHR";
       case StructureType::eQueueFamilyOptimalImageTransferGranularityPropertiesKHR : return "QueueFamilyOptimalImageTransferGranularityPropertiesKHR";
       case StructureType::ePhysicalDeviceCooperativeMatrixMaintenance1FeaturesEXT  : return "PhysicalDeviceCooperativeMatrixMaintenance1FeaturesEXT";
@@ -6202,7 +6210,13 @@ VULKAN_HPP_EXPORT namespace VULKAN_HPP_NAMESPACE
       case StructureType::ePhysicalDeviceImageTilingControlFeaturesEXT          : return "PhysicalDeviceImageTilingControlFeaturesEXT";
       case StructureType::eImageTilingControlCreateInfoEXT                      : return "ImageTilingControlCreateInfoEXT";
       case StructureType::ePhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV: return "PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV";
-      default                                                                   : return "invalid ( " + toHexString( static_cast<uint32_t>( value ) ) + " )";
+      case StructureType::ePhysicalDevicePrivateDataBaseHandleFeaturesNV        : return "PhysicalDevicePrivateDataBaseHandleFeaturesNV";
+      case StructureType::ePhysicalDeviceBufferDeviceAddressAllocationAlignmentFeaturesVALVE:
+        return "PhysicalDeviceBufferDeviceAddressAllocationAlignmentFeaturesVALVE";
+      case StructureType::ePhysicalDeviceBufferDeviceAddressAllocationAlignmentPropertiesVALVE:
+        return "PhysicalDeviceBufferDeviceAddressAllocationAlignmentPropertiesVALVE";
+      case StructureType::eBufferDeviceAddressAlignmentAllocateInfoVALVE: return "BufferDeviceAddressAlignmentAllocateInfoVALVE";
+      default                                                           : return "invalid ( " + toHexString( static_cast<uint32_t>( value ) ) + " )";
     }
   }
 
@@ -7815,7 +7829,7 @@ VULKAN_HPP_EXPORT namespace VULKAN_HPP_NAMESPACE
     switch ( value )
     {
       case PipelineColorBlendStateCreateFlagBits::eRasterizationOrderAttachmentAccessEXT: return "RasterizationOrderAttachmentAccessEXT";
-      default                                                                           : return "invalid ( " + toHexString( static_cast<uint32_t>( value ) ) + " )";
+      default: return "invalid ( " + toHexString( static_cast<uint32_t>( value ) ) + " )";
     }
   }
 
@@ -7825,7 +7839,7 @@ VULKAN_HPP_EXPORT namespace VULKAN_HPP_NAMESPACE
     {
       case PipelineDepthStencilStateCreateFlagBits::eRasterizationOrderAttachmentDepthAccessEXT  : return "RasterizationOrderAttachmentDepthAccessEXT";
       case PipelineDepthStencilStateCreateFlagBits::eRasterizationOrderAttachmentStencilAccessEXT: return "RasterizationOrderAttachmentStencilAccessEXT";
-      default                                                                                    : return "invalid ( " + toHexString( static_cast<uint32_t>( value ) ) + " )";
+      default: return "invalid ( " + toHexString( static_cast<uint32_t>( value ) ) + " )";
     }
   }
 
@@ -7961,7 +7975,7 @@ VULKAN_HPP_EXPORT namespace VULKAN_HPP_NAMESPACE
       case SubpassDescriptionFlagBits::eEnableLegacyDitheringEXT                    : return "EnableLegacyDitheringEXT";
       case SubpassDescriptionFlagBits::eFragmentRegionEXT                           : return "FragmentRegionEXT";
       case SubpassDescriptionFlagBits::eCustomResolveEXT                            : return "CustomResolveEXT";
-      default                                                                       : return "invalid ( " + toHexString( static_cast<uint32_t>( value ) ) + " )";
+      default: return "invalid ( " + toHexString( static_cast<uint32_t>( value ) ) + " )";
     }
   }
 
@@ -8347,9 +8361,13 @@ VULKAN_HPP_EXPORT namespace VULKAN_HPP_NAMESPACE
     }
   }
 
-  VULKAN_HPP_INLINE VULKAN_HPP_CONSTEXPR_20 std::string to_string( PrivateDataSlotCreateFlagBits )
+  VULKAN_HPP_INLINE VULKAN_HPP_CONSTEXPR_20 std::string to_string( PrivateDataSlotCreateFlagBits value )
   {
-    return "(void)";
+    switch ( value )
+    {
+      case PrivateDataSlotCreateFlagBits::eBaseObjectHandleNV: return "BaseObjectHandleNV";
+      default                                                : return "invalid ( " + toHexString( static_cast<uint32_t>( value ) ) + " )";
+    }
   }
 
   VULKAN_HPP_INLINE VULKAN_HPP_CONSTEXPR_20 std::string to_string( PipelineStageFlagBits2 value )
@@ -9897,7 +9915,7 @@ VULKAN_HPP_EXPORT namespace VULKAN_HPP_NAMESPACE
       case AccelerationStructureCreateFlagBitsKHR::eDeviceAddressCaptureReplay      : return "DeviceAddressCaptureReplay";
       case AccelerationStructureCreateFlagBitsKHR::eDescriptorBufferCaptureReplayEXT: return "DescriptorBufferCaptureReplayEXT";
       case AccelerationStructureCreateFlagBitsKHR::eMotionNV                        : return "MotionNV";
-      default                                                                       : return "invalid ( " + toHexString( static_cast<uint32_t>( value ) ) + " )";
+      default: return "invalid ( " + toHexString( static_cast<uint32_t>( value ) ) + " )";
     }
   }
 
@@ -10079,7 +10097,7 @@ VULKAN_HPP_EXPORT namespace VULKAN_HPP_NAMESPACE
     switch ( value )
     {
       case PerformanceConfigurationTypeINTEL::eCommandQueueMetricsDiscoveryActivated: return "CommandQueueMetricsDiscoveryActivated";
-      default                                                                       : return "invalid ( " + toHexString( static_cast<uint32_t>( value ) ) + " )";
+      default: return "invalid ( " + toHexString( static_cast<uint32_t>( value ) ) + " )";
     }
   }
 
@@ -10347,7 +10365,7 @@ VULKAN_HPP_EXPORT namespace VULKAN_HPP_NAMESPACE
       case VideoEncodeCapabilityFlagBitsKHR::eInsufficientBitstreamBufferRangeDetection: return "InsufficientBitstreamBufferRangeDetection";
       case VideoEncodeCapabilityFlagBitsKHR::eQuantizationDeltaMap                     : return "QuantizationDeltaMap";
       case VideoEncodeCapabilityFlagBitsKHR::eEmphasisMap                              : return "EmphasisMap";
-      default                                                                          : return "invalid ( " + toHexString( static_cast<uint32_t>( value ) ) + " )";
+      default: return "invalid ( " + toHexString( static_cast<uint32_t>( value ) ) + " )";
     }
   }
 
@@ -11497,7 +11515,7 @@ VULKAN_HPP_EXPORT namespace VULKAN_HPP_NAMESPACE
     switch ( value )
     {
       case ClusterAccelerationStructureClusterFlagBitsNV::eAllowDisableOpacityMicromaps: return "AllowDisableOpacityMicromaps";
-      default                                                                          : return "invalid ( " + toHexString( static_cast<uint32_t>( value ) ) + " )";
+      default: return "invalid ( " + toHexString( static_cast<uint32_t>( value ) ) + " )";
     }
   }
 
@@ -11508,7 +11526,7 @@ VULKAN_HPP_EXPORT namespace VULKAN_HPP_NAMESPACE
       case ClusterAccelerationStructureGeometryFlagBitsNV::eCullDisable                : return "CullDisable";
       case ClusterAccelerationStructureGeometryFlagBitsNV::eNoDuplicateAnyhitInvocation: return "NoDuplicateAnyhitInvocation";
       case ClusterAccelerationStructureGeometryFlagBitsNV::eOpaque                     : return "Opaque";
-      default                                                                          : return "invalid ( " + toHexString( static_cast<uint32_t>( value ) ) + " )";
+      default: return "invalid ( " + toHexString( static_cast<uint32_t>( value ) ) + " )";
     }
   }
 
@@ -11523,7 +11541,7 @@ VULKAN_HPP_EXPORT namespace VULKAN_HPP_NAMESPACE
       case ClusterAccelerationStructureAddressResolutionFlagBitsNV::eIndirectedDstSizesArray  : return "IndirectedDstSizesArray";
       case ClusterAccelerationStructureAddressResolutionFlagBitsNV::eIndirectedSrcInfosArray  : return "IndirectedSrcInfosArray";
       case ClusterAccelerationStructureAddressResolutionFlagBitsNV::eIndirectedSrcInfosCount  : return "IndirectedSrcInfosCount";
-      default                                                                                 : return "invalid ( " + toHexString( static_cast<uint32_t>( value ) ) + " )";
+      default: return "invalid ( " + toHexString( static_cast<uint32_t>( value ) ) + " )";
     }
   }
 
@@ -11596,7 +11614,7 @@ VULKAN_HPP_EXPORT namespace VULKAN_HPP_NAMESPACE
       case PartitionedAccelerationStructureInstanceFlagBitsNV::eFlagForceOpaque              : return "FlagForceOpaque";
       case PartitionedAccelerationStructureInstanceFlagBitsNV::eFlagForceNoOpaque            : return "FlagForceNoOpaque";
       case PartitionedAccelerationStructureInstanceFlagBitsNV::eFlagEnableExplicitBoundingBox: return "FlagEnableExplicitBoundingBox";
-      default                                                                                : return "invalid ( " + toHexString( static_cast<uint32_t>( value ) ) + " )";
+      default: return "invalid ( " + toHexString( static_cast<uint32_t>( value ) ) + " )";
     }
   }
 
