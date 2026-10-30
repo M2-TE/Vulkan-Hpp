@@ -39,7 +39,7 @@
 #  endif
 #endif
 
-VULKAN_HPP_STATIC_ASSERT( VK_HEADER_VERSION == 365, "Wrong VK_HEADER_VERSION!" );
+VULKAN_HPP_STATIC_ASSERT( VK_HEADER_VERSION == 367, "Wrong VK_HEADER_VERSION!" );
 
 VULKAN_HPP_EXPORT namespace VULKAN_HPP_NAMESPACE
 {
@@ -11552,6 +11552,10 @@ VULKAN_HPP_EXPORT namespace VULKAN_HPP_NAMESPACE
   VULKAN_HPP_CONSTEXPR_INLINE auto EXTPrimitiveRestartIndexSpecVersion   = VK_EXT_PRIMITIVE_RESTART_INDEX_SPEC_VERSION;
   VULKAN_HPP_CONSTEXPR_INLINE auto EXTPrimitiveRestartIndexExtensionName = VK_EXT_PRIMITIVE_RESTART_INDEX_EXTENSION_NAME;
 
+  //=== VK_KHR_maintenance12 ===
+  VULKAN_HPP_CONSTEXPR_INLINE auto KHRMaintenance12SpecVersion   = VK_KHR_MAINTENANCE_12_SPEC_VERSION;
+  VULKAN_HPP_CONSTEXPR_INLINE auto KHRMaintenance12ExtensionName = VK_KHR_MAINTENANCE_12_EXTENSION_NAME;
+
   //=== VK_EXT_image_tiling_control ===
   VULKAN_HPP_CONSTEXPR_INLINE auto EXTImageTilingControlSpecVersion   = VK_EXT_IMAGE_TILING_CONTROL_SPEC_VERSION;
   VULKAN_HPP_CONSTEXPR_INLINE auto EXTImageTilingControlExtensionName = VK_EXT_IMAGE_TILING_CONTROL_EXTENSION_NAME;
@@ -11572,6 +11576,10 @@ VULKAN_HPP_EXPORT namespace VULKAN_HPP_NAMESPACE
   VULKAN_HPP_CONSTEXPR_INLINE auto VALVEBufferDeviceAddressAllocationAlignmentSpecVersion = VK_VALVE_BUFFER_DEVICE_ADDRESS_ALLOCATION_ALIGNMENT_SPEC_VERSION;
   VULKAN_HPP_CONSTEXPR_INLINE auto VALVEBufferDeviceAddressAllocationAlignmentExtensionName =
     VK_VALVE_BUFFER_DEVICE_ADDRESS_ALLOCATION_ALIGNMENT_EXTENSION_NAME;
+
+  //=== VK_GOOGLE_hdr_smpte_st_209450_metadata ===
+  VULKAN_HPP_CONSTEXPR_INLINE auto GOOGLEHdrSmpteSt209450MetadataSpecVersion   = VK_GOOGLE_HDR_SMPTE_ST_209450_METADATA_SPEC_VERSION;
+  VULKAN_HPP_CONSTEXPR_INLINE auto GOOGLEHdrSmpteSt209450MetadataExtensionName = VK_GOOGLE_HDR_SMPTE_ST_209450_METADATA_EXTENSION_NAME;
 
   //===================================
   //=== STRUCT forward declarations ===
@@ -14048,6 +14056,10 @@ VULKAN_HPP_EXPORT namespace VULKAN_HPP_NAMESPACE
   //=== VK_EXT_primitive_restart_index ===
   struct PhysicalDevicePrimitiveRestartIndexFeaturesEXT;
 
+  //=== VK_KHR_maintenance12 ===
+  struct PhysicalDeviceMaintenance12FeaturesKHR;
+  struct PhysicalDeviceMaintenance12PropertiesKHR;
+
   //=== VK_EXT_image_tiling_control ===
   struct PhysicalDeviceImageTilingControlFeaturesEXT;
   struct ImageTilingControlCreateInfoEXT;
@@ -14065,6 +14077,11 @@ VULKAN_HPP_EXPORT namespace VULKAN_HPP_NAMESPACE
   struct PhysicalDeviceBufferDeviceAddressAllocationAlignmentFeaturesVALVE;
   struct PhysicalDeviceBufferDeviceAddressAllocationAlignmentPropertiesVALVE;
   struct BufferDeviceAddressAlignmentAllocateInfoVALVE;
+
+  //=== VK_GOOGLE_hdr_smpte_st_209450_metadata ===
+  struct PhysicalDeviceHdrSmpteSt209450FeaturesGOOGLE;
+  struct HdrSmpteSt209450GOOGLE;
+  struct SurfaceCapabilitiesHdrSmpteSt209450GOOGLE;
 
   //===================================
   //=== HANDLE forward declarations ===
@@ -25900,6 +25917,34 @@ VULKAN_HPP_EXPORT namespace VULKAN_HPP_NAMESPACE
     };
   };
 
+  //=== VK_KHR_maintenance12 ===
+  template <>
+  struct StructExtends<PhysicalDeviceMaintenance12FeaturesKHR, PhysicalDeviceFeatures2>
+  {
+    enum
+    {
+      value = true
+    };
+  };
+
+  template <>
+  struct StructExtends<PhysicalDeviceMaintenance12FeaturesKHR, DeviceCreateInfo>
+  {
+    enum
+    {
+      value = true
+    };
+  };
+
+  template <>
+  struct StructExtends<PhysicalDeviceMaintenance12PropertiesKHR, PhysicalDeviceProperties2>
+  {
+    enum
+    {
+      value = true
+    };
+  };
+
   //=== VK_EXT_image_tiling_control ===
   template <>
   struct StructExtends<PhysicalDeviceImageTilingControlFeaturesEXT, PhysicalDeviceFeatures2>
@@ -26015,6 +26060,43 @@ VULKAN_HPP_EXPORT namespace VULKAN_HPP_NAMESPACE
 
   template <>
   struct StructExtends<BufferDeviceAddressAlignmentAllocateInfoVALVE, MemoryAllocateInfo>
+  {
+    enum
+    {
+      value = true
+    };
+  };
+
+  //=== VK_GOOGLE_hdr_smpte_st_209450_metadata ===
+  template <>
+  struct StructExtends<PhysicalDeviceHdrSmpteSt209450FeaturesGOOGLE, PhysicalDeviceFeatures2>
+  {
+    enum
+    {
+      value = true
+    };
+  };
+
+  template <>
+  struct StructExtends<PhysicalDeviceHdrSmpteSt209450FeaturesGOOGLE, DeviceCreateInfo>
+  {
+    enum
+    {
+      value = true
+    };
+  };
+
+  template <>
+  struct StructExtends<HdrSmpteSt209450GOOGLE, HdrMetadataEXT>
+  {
+    enum
+    {
+      value = true
+    };
+  };
+
+  template <>
+  struct StructExtends<SurfaceCapabilitiesHdrSmpteSt209450GOOGLE, SurfaceCapabilities2KHR>
   {
     enum
     {
